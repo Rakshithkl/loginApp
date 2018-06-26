@@ -1,0 +1,18 @@
+.RegForm{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    padding-left: 426px;
+    background-color: #fff;
+    padding-right: 561px;
+}
+.login{
+    font-size: 14px;
+    line-height: 1.42857143;
+    padding-left: 499px;
+    padding-right: 514px;
+    padding-top: 77px;
+    color: #333;
+    background-color: #fff;
+}

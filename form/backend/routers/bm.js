@@ -1,0 +1,51 @@
+var express=require('express')
+var router=express.Router()
+var bm=require('../models/bm');
+router.get('/getall',(req,res)=>{
+    bm.find((err,bm)=>{
+        res.json({sucess:true})
+    })
+})
+router.post('/create',(req,res)=>{
+    const{username}=req.body
+    bm.find({username},(err,bms)=>{
+        if(bms[0]){
+            res.json({sucess:false})
+        }else{
+            bm.create(req.body,(err,data)=>{
+                bm.find((err,bms)=>{
+                    res.json({sucess:true,bms})
+                })
+            })
+            
+        }
+   })
+})
+router.post('/update/:username',(req,res)=>{
+    const{username}=req.body
+    bm.findOneAndUpdate({username},req.body,(err,bm)=>{
+        bm.find((err,bm)=>{
+            res.json({sucess:true,bm})
+        })
+    })
+})
+router.post('/remove/:username',(req,res)=>{
+const{username}=req.body
+bm.findByIdAndRemove({username},(err,bms)=>{
+    bm.find((err,bms)=>{
+        res.json({sucess:true.bm})
+     })
+  })
+})
+router.get('/Login/:username/:password',(req,res)=>{
+    const{username,password}=req.body
+    bm.findOne({username,password},(err,bms)=>{
+        if(err)console.log(err)
+        if(users){
+            res.json({sucess:true})
+        }else{
+            res.json({sucess:false})
+        }
+    })
+})
+module.exports=router

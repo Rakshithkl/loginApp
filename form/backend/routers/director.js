@@ -1,0 +1,51 @@
+var express=require('express')
+var director=require('../models/director')
+var router=express.Router()
+router.get('getall',(req,res)=>{
+    director.find((err,directors)=>{
+        res.json({sucess:true,directors})
+    })
+})
+router.post('/create',(req,res)=>{
+    const{username}=req.body
+    director.find({username},(err,directors)=>{
+        if(director[0]){
+            res.json({sucess:false})
+        }else{
+            director.create(req.body,(err,directors)=>{
+                director.find((err,directors)=>{
+                    res.json({sucess:true,directors})
+                })
+            })
+        }
+    })
+})
+router.post('/update/:username',(req,res)=>{
+    const{username}=req.body
+    director.findOneAndUpdate({username},req.body,(err,data)=>{
+        director.find((err,directors)=>{
+            res.json({sucess:true,directors})
+
+        })
+    })
+})
+router.post('/delete/:username',(req,res)=>{
+    const{username}=req.body
+    director.findOneAndRemove({username},(err,data)=>{
+        director.find((err,directors)=>{
+            res.json({sucess:true,directors})
+        })
+    })
+})
+router.get('/login/:username/:password',(req,res)=>{
+    const{username,password}=req.body
+    director.findOne({username,password},(err,user)=>{
+        if(err)console.log('err')
+        if(user){
+            res.json({sucess:true,user})
+        }else{
+            res.json({sucess:false})
+        }
+    })
+})
+module.exports=router
